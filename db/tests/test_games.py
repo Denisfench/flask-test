@@ -1,5 +1,5 @@
 
-from .. import games
+from db import games
 
 
 def test_get_games():

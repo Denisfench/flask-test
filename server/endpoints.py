@@ -42,7 +42,8 @@ class HelloWorld(Resource):
     The purpose of the HelloWorld class is to have a simple test to see if the
     app is working at all.
     """
-    def get(self):
+
+    def post(self):
         """
         A trivial endpoint to see if the server is running.
         It just answers with "hello world."
@@ -55,6 +56,7 @@ class MainMenu(Resource):
     """
     This will deliver our main menu.
     """
+
     def get(self):
         """
         Gets the main game menu.
@@ -67,6 +69,7 @@ class CharacterTypeList(Resource):
     """
     This will get a list of character types.
     """
+
     def get(self):
         """
         Returns a list of character types.
@@ -79,6 +82,7 @@ class CharacterTypeDetails(Resource):
     """
     This will return details on a character type.
     """
+
     @api.response(HTTPStatus.OK, 'Success')
     @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
     def get(self, char_type):
@@ -97,6 +101,7 @@ class GameList(Resource):
     """
     This will get a list of currrent games.
     """
+
     def get(self):
         """
         Returns a list of current games.
@@ -109,6 +114,7 @@ class GameDetails(Resource):
     """
     This will get details on a game.
     """
+
     @api.response(HTTPStatus.OK, 'Success')
     @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
     def get(self, game):
@@ -133,6 +139,7 @@ class AddGame(Resource):
     """
     Add a game.
     """
+
     @api.expect(game_fields)
     def post(self):
         """
@@ -147,6 +154,7 @@ class Endpoints(Resource):
     This class will serve as live, fetchable documentation of what endpoints
     are available in the system.
     """
+
     def get(self):
         """
         The `get()` method will return a list of available endpoints.
@@ -154,3 +162,52 @@ class Endpoints(Resource):
         endpoints = ''
         # sorted(rule.rule for rule in api.app.url_map.iter_rules())
         return {"Available endpoints": endpoints}
+
+
+@api.route('/endpoints')
+class Endpoints(Resource):
+    """
+    This class will serve as live, fetchable documentation of what endpoints
+    are available in the system.
+    """
+
+    def get(self):
+        """
+        The `get()` method will return a list of available endpoints.
+        """
+        endpoints = ''
+        # sorted(rule.rule for rule in api.app.url_map.iter_rules())
+        return {"Available endpoints": endpoints}
+
+
+@api.route('/my_endpint', methods=('GET', 'POST'))
+class Index(Resource):
+
+    def get(self):
+        return "Hello from get"
+
+    def index(self):
+        return "Hello from index"
+
+
+@app.route('/my_app_endpoint', methods=('GET', 'POST'))
+def my_index():
+    if request.method == 'GET':
+        return 'Hello from my endpoint', 200
+
+
+@api.route('/my_app_endpoint')
+class MyAppEndpoint(Resource):
+    def get(self):
+        if request.method == 'GET':
+            return 'Hello from my endpoint', 200
+
+# def index():
+#     if request.method=='POST':
+#         content = request.form['content']
+#         degree = request.form['degree']
+#         todos.insert_one({'content': content, 'degree': degree})
+#         return redirect(url_for('index'))
+#
+#     all_todos = todos.find()
+#     return render_template('index.html', todos=all_todos)

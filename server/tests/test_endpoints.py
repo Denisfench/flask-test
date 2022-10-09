@@ -1,7 +1,7 @@
 
 import pytest
 
-from ..server import endpoints
+from .. import endpoints
 
 TEST_CLIENT = ep.app.test_client()
 

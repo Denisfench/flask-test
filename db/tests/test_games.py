@@ -1,5 +1,5 @@
 
-import db.games as gm
+from .. import games
 
 
 def test_get_games():

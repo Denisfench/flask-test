@@ -1,5 +1,5 @@
 
-import db.char_types as ctyp
+from .. import char_types
 
 
 def test_get_char_types():
